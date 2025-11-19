@@ -1,0 +1,54 @@
+# ---------------------------
+# Ruby / RSpec / Bundler
+# ---------------------------
+.bundle/
+vendor/
+*.gem
+
+# Ignore Ruby version files
+.rvmrc
+.rbenv-vars
+.ruby-version
+.ruby-gemset
+
+# ---------------------------
+# Environment & Credentials
+# ---------------------------
+.env
+.env.*
+
+# ---------------------------
+# IDE / Editor Files
+# ---------------------------
+.idea/
+.vscode/
+*.iml
+
+# ---------------------------
+# Logs & Temp Files
+# ---------------------------
+logs/
+*.log
+log/
+tmp/
+*.tmp
+*.swp
+*.swo
+
+# ---------------------------
+# Test Reports
+# ---------------------------
+reports/
+allure-results/
+allure-report/
+coverage/
+spec/reports/
+*.html
+
+# ---------------------------
+# System Files
+# ---------------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
