@@ -5,7 +5,7 @@ require 'selenium-webdriver'
 
 Capybara.run_server = false
 Capybara.default_max_wait_time = 10
-Capybara.app_host = ENV['APP_HOST'] || 'https://wissentechnology.freshservice.com'
+Capybara.app_host = ENV['APP_HOST'] || 'http://localhost:4200/'
 
 
 Selenium::WebDriver.logger.level = :error

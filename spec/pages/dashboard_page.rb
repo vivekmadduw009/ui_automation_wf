@@ -42,7 +42,7 @@ class DashboardPage < BasePage
   end
 
   def login_once(creds)
-    return if logged_in?
+    # return if logged_in?
 
     visit_homepage
     go_to_login
