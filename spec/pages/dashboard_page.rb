@@ -7,15 +7,11 @@ class DashboardPage < BasePage
   include Capybara::DSL
   include RSpec::Matchers
   # Prefer CSS selectors where possible; keep XPaths if necessary
-  USERNAME = "#username"
-  PASSWORD = "#password"
-  LOGIN_BUTTON = "button[data-testid='login-button']"
   DASHBOARD_TITLE = "//div[@class='flex items-center gap-4']/h1"
   CREATE_TICKET_ADD="//button[@class='w-7 h-7 shadow-lg flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 shadow text-white cursor-pointer transition']"
   CREATE_TICKET= "//p[text()='Create Ticket']"
   CREATE_TICKET_BOTTOM_TEXT="//p[text()='Report an issue']"
-  OPEN_TICKETS = "section[data-test-id='widget-layout-0-open-tickets']"
-  OPEN_TICKETS_HEADER = "//span[@class='view-selected']//span[contains(., 'Open Tickets')]"
+
 
 
   def visit_homepage

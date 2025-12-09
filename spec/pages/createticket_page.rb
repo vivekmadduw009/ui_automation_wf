@@ -47,13 +47,16 @@ class CreateTicketPage < BasePage
 
   end
 
-  def create_ticket
-    require "date"
-    value = "User_#{Time.now.strftime("%Y%m%d_%H%M%S")}"
-    find(:xpath,SUBJECT_TEXT_FIELD).set(value)
+  def create_ticket(subject,description)
+
+    find(:xpath,SUBJECT_TEXT_FIELD).set(subject)
     page.execute_script("window.scrollBy(0, 500)")
-    find(:xpath,DESCRIPTION_TEXT_FIELD).set("This record was created by automation script.")
+    find(:xpath,DESCRIPTION_TEXT_FIELD).set(description)
     find(:xpath,CREATE_BUTTON).click
+    find(:xpath,"//a[contains(.,'#{subject}')]").click
+
+
+
 
 
     end

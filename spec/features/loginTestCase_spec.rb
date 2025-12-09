@@ -20,11 +20,10 @@ RSpec.describe "Login Scenarios", type: :feature  do
 
   it "Valid Username and Valid Password" do
 
-    sign_in_page.login(username: "admin@gmail.com",password: "password123")
+    sign_in_page.login(username: creds["adminUsername"],password: creds["adminPassword"])
     dashboard_page.logged_in?
 
   end
-
 
   it "Invalid Username and Valid Password" do
 
