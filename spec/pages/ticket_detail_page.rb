@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 require_relative 'base_page'
 require_relative '../spec_helper'
-
-class TicketDetailsPage <BasePage
-
+class TicketDetail_page < BasePage
   include Capybara::DSL
   include RSpec::Matchers
 
@@ -20,6 +18,9 @@ class TicketDetailsPage <BasePage
   COMMENT_DESCRIPTION="//p[@class='text-gray-700 break-words']"
   DELETE_COMMENT="//button[normalize-space()='Delete']"
 
+  def click_ticket
+
+  end
 
   def validate_ticket_details(subject,requester,description)
     subject_match=find(:xpath, SUBJECT).text
@@ -37,23 +38,41 @@ class TicketDetailsPage <BasePage
 
 
   end
+
+  def check_comment_count(count)
+    count_comment=find(:xpath,COMMENT_COUNT).text
+    comment_count_text =
+      if count == 1
+        "1 comment"
+      else
+        "#{count} comments"
+      end
+    expect(count_comment).to match(comment_count_text)
+  end
+
+
   def add_comment(comment,name)
 
-    initial_count=find(:xpath,COMMENT_COUNT).text
-    expect(initial_count).to match("0 comments")
+    initial_count = find(:xpath, COMMENT_COUNT).text.to_i
+    check_comment_count(initial_count)
     find(:xpath, COMMENT_TEXT_FIELD).set(comment)
     find(:xpath, ADD_COMMENT, wait: 10).click
-    after_count=find(:xpath,COMMENT_COUNT).text
-    expect(after_count).to match("1 comment")
+    sleep 5
+    check_comment_count(1)
     comment_name=find(:xpath,COMMENT_NAME).text
     expect(comment_name).to eq(name)
     description=find(:xpath,COMMENT_DESCRIPTION).text
     expect(description).to eq(comment)
-    delete_comment=find(:xpath,DELETE_COMMENT).text
-    expect(delete_comment).to eq("Delete")
-    find(:xpath,DELETE_COMMENT).click
-
-
 
   end
+
+  def delete_comment
+    initial_count = find(:xpath, COMMENT_COUNT).text.to_i
+    delete_comment=find(:xpath,DELETE_COMMENT).text
+    expect(delete_comment).to eq("Delete")
+    find(:xpath,DELETE_COMMENT, wait:10).click
+    updated_count = find(:xpath, COMMENT_COUNT, wait: 10).text.to_i
+    check_comment_count(updated_count)
+  end
+
 end

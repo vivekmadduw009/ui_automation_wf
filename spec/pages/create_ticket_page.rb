@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 require_relative 'base_page'
 require_relative '../spec_helper'
+class CreateTicket_page<BasePage
 
-class CreateTicketPage < BasePage
   include Capybara::DSL
   include RSpec::Matchers
 
@@ -53,13 +53,7 @@ class CreateTicketPage < BasePage
     page.execute_script("window.scrollBy(0, 500)")
     find(:xpath,DESCRIPTION_TEXT_FIELD).set(description)
     find(:xpath,CREATE_BUTTON).click
-    find(:xpath,"//a[contains(.,'#{subject}')]").click
-
-
-
-
-
-    end
-
+    expect(page).to have_no_text("Ticket created successfully", wait: 10)
+  end
 
 end

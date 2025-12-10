@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 require_relative 'base_page'
 require_relative '../spec_helper'
+class SignIn_page < BasePage
 
-class SignInPage < BasePage
   include Capybara::DSL
   include RSpec::Matchers
 

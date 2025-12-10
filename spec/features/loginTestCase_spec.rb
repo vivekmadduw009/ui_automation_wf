@@ -3,7 +3,7 @@ require_relative '../spec_helper'
 
 RSpec.describe "Login Scenarios", type: :feature  do
 
-  let(:sign_in_page) { SignInPage.new }
+  let(:sign_in_page) { SignIn_page.new }
   let(:dashboard_page) { DashboardPage.new }
   let(:creds) { config_credentials }
 
