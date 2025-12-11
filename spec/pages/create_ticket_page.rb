@@ -7,10 +7,10 @@ class CreateTicket_page<BasePage
   include RSpec::Matchers
 
   NEW_TICKET= "//h1[@class='text-2xl font-semibold mb-6 text-gray-800']"
-  REQUESTER_LABEL ="//label[@class='text-sm font-normal text-gray-700']"
+  REQUESTER_LABEL ="//label[.='Requestor']"
   REQUESTER_TEXT_FIELD="//input[@placeholder='Search']"
   SUBJECT_LABEL="(//label[@class='block text-sm font-normal text-gray-700 mb-2'])[1]"
-  SUBJECT_TEXT_FIELD="(//input[@type='text'])[2]"
+  SUBJECT_TEXT_FIELD="//input[@type='text']"
   SOURCE_DROPDOWN_LABEL="(//label[@class='block text-sm font-normal text-gray-700 mb-2'])[2]"
   SOURCE_DROPDOWN="//select[.//option[@value='email'] and .//option[@value='phone']]"
   STATUS_DROPDOWN_LABEL="(//label[@class='block text-sm font-normal text-gray-700 mb-2'])[3]"
@@ -19,15 +19,15 @@ class CreateTicket_page<BasePage
   URGENCY_DROPDOWN="//select[.//option[@value='low'] and .//option[@value='medium'] and .//option[@value='high']]"
   ASSIGN_TO_LABEL="//label[text()='Assign To']"
   ASSIGN_TO_DROPDOWN="#assignee"
-  DESCRIPTION_HEADER="//label[text()='Description']"
-  DESCRIPTION_TEXT_FIELD="//label[text()='Description']/following-sibling::textarea"
+  DESCRIPTION_HEADER="//label[contains(normalize-space(.), 'Description')]"
+  DESCRIPTION_TEXT_FIELD="//textarea"
   CREATE_BUTTON="//button[@type='submit']"
   CANCEL_BUTTON="//button[@class='px-6 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 font-medium']"
 
 
   def assert_text
     req_label=find(:xpath,REQUESTER_LABEL).text
-    expect(req_label).to eq("Requester *")
+    expect(req_label).to eq("Requestor")
     sub_label=find(:xpath,SUBJECT_LABEL).text
     expect(sub_label).to eq("Subject *")
     source_label=find(:xpath,SOURCE_DROPDOWN_LABEL).text
@@ -35,11 +35,11 @@ class CreateTicket_page<BasePage
     status_label=find(:xpath,STATUS_DROPDOWN_LABEL).text
     expect(status_label).to eq("Status *")
     urgency_label=find(:xpath,URGENCY_DROPDOWN_LABEL).text
-    expect(urgency_label).to eq("Urgency")
+    expect(urgency_label).to eq("Priority")
     assign_label=find(:xpath,ASSIGN_TO_LABEL).text
     expect(assign_label).to eq("Assign To")
     des_label=find(:xpath,DESCRIPTION_HEADER).text
-    expect(des_label).to eq("Description")
+    expect(des_label).to eq("Description *")
     create_button=find(:xpath,CREATE_BUTTON).text
     expect(create_button).to eq("Create Ticket")
     cancel_button=find(:xpath,CANCEL_BUTTON).text
