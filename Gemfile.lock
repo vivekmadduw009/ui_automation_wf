@@ -31,6 +31,7 @@ GEM
     mini_mime (1.1.5)
     nokogiri (1.18.10-x64-mingw-ucrt)
       racc (~> 1.4)
+    pg (1.6.2-x64-mingw-ucrt)
     public_suffix (6.0.2)
     racc (1.8.1)
     rack (3.2.4)
@@ -71,6 +72,7 @@ DEPENDENCIES
   allure-rspec
   capybara
   dotenv
+  pg
   rspec
   selenium-webdriver
   webdriver

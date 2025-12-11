@@ -5,9 +5,14 @@ require 'selenium-webdriver'
 require 'allure-rspec'
 require 'dotenv'
 require_relative 'support/logger'
+require "yaml"
+require "erb"
 
 
 Dotenv.load if defined?(Dotenv)
+
+# Calling data from test_data file
+
 
 
 AllureRspec.configure do |c|
@@ -64,5 +69,6 @@ RSpec.configure do |config|
     system("allure generate reports/allure-results --clean -o reports/allure-report")
     TestLogger.step "Allure Report Generated at reports/allure-report"
   end
+
 
 end

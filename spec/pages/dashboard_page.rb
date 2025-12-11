@@ -4,15 +4,14 @@ require_relative '../spec_helper'
 
 
 class DashboardPage < BasePage
+  include Capybara::DSL
+  include RSpec::Matchers
   # Prefer CSS selectors where possible; keep XPaths if necessary
-  LOGIN_LINK = "a[href='/support/login']"
-  USERNAME = "#username"
-  PASSWORD = "#password"
-  LOGIN_BUTTON = "button[data-testid='login-button']"
-  DASHBOARD_TITLE = "span#dashboard-name-title"
-  PORTAL_LOGO = "h1.portal-name.hide-on-mobile"
-  OPEN_TICKETS = "section[data-test-id='widget-layout-0-open-tickets']"
-  OPEN_TICKETS_HEADER = "//span[@class='view-selected']//span[contains(., 'Open Tickets')]"
+  DASHBOARD_TITLE = "//div[@class='flex items-center gap-4']/h1"
+  CREATE_TICKET_ADD="//button[@class='w-7 h-7 shadow-lg flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 shadow text-white cursor-pointer transition']"
+  CREATE_TICKET= "//p[text()='Create Ticket']"
+  CREATE_TICKET_BOTTOM_TEXT="//p[text()='Report an issue']"
+
 
 
   def visit_homepage
@@ -38,11 +37,11 @@ class DashboardPage < BasePage
 
 
   def logged_in?
-    visible?(:css, DASHBOARD_TITLE, wait: 10)
+    visible?(:xpath, DASHBOARD_TITLE, wait: 10)
   end
 
   def login_once(creds)
-    return if logged_in?
+    # return if logged_in?
 
     visit_homepage
     go_to_login
@@ -51,6 +50,20 @@ class DashboardPage < BasePage
     raise RSpec::Expectations::ExpectationNotMetError, "Login failed!" unless logged_in?
     TestLogger.info "Successfully logged in"
   end
+
+  def click_create_ticket
+    TestLogger.step "Click on Create Ticket"
+    find(:xpath, CREATE_TICKET_ADD, wait: 3).click
+
+    create_text_header = find(:xpath, CREATE_TICKET).text.strip
+    expect(create_text_header).to eq("Create Ticket")
+
+    create_text_bottom = find(:xpath, CREATE_TICKET_BOTTOM_TEXT).text.strip
+    expect(create_text_bottom).to eq("Report an issue")
+
+    find(:xpath,CREATE_TICKET, wait: 5).click
+  end
+
 
   def open_tickets
     TestLogger.step "Navigating to Open Tickets Section"

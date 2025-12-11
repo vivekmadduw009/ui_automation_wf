@@ -42,12 +42,19 @@ module TestLogger
 
     def log_file_paths
       ensure_logs_dir
+
+      Dir.glob(File.join(logs_dir, '*')).each do |path|
+        begin
+          FileUtils.rm_rf(path)
+        rescue StandardError => e
+          puts "Failed to remove old log file or directory #{path}: #{e.message}"
+        end
+      end
       timestamp = Time.now.strftime('%Y-%m-%d_%H-%M-%S')
       timestamped = File.join(logs_dir, "test-#{timestamp}.log")
       latest = File.join(logs_dir, "test.log") # always overwritten (latest)
       [timestamped, latest]
     end
-
     # return a logger instance that writes to both timestamped file and latest file
     def logger
       return @logger if defined?(@logger) && @logger

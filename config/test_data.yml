@@ -1,6 +1,10 @@
 environment: test
-app_host: https://wissentechnology.freshservice.com
+app_host: http://localhost:4200/
 
 credentials:
-  username: <%= ENV['FS_USERNAME'] || 'vivek.maddu@wissen.com' %>
-  password: <%= ENV['FS_PASSWORD'] || 'varma@009V' %>
+  adminUsername: <%= ENV['FS_USERNAME'] || 'admin@gmail.com' %>
+  adminPassword: <%= ENV['FS_PASSWORD'] || 'password123' %>
+
+
+  agentUsername: <%= ENV['FS_USERNAME'] || 'agent@gmail.com' %>
+  agentPassword: <%= ENV['FS_PASSWORD'] || 'password123' %>
