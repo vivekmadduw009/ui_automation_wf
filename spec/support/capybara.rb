@@ -8,7 +8,7 @@ Capybara.default_max_wait_time = 10
 Capybara.app_host = ENV['APP_HOST'] || 'http://localhost:4200/'
 
 
-Selenium::WebDriver.logger.level = :error
+Selenium::WebDriver.logger.level = ENV['CI'] ? :info : :error
 
 
 Capybara.register_driver :selenium_chrome_headless do |app|
@@ -39,5 +39,10 @@ end
 
 
 # Default drivers
-Capybara.default_driver = ENV['CI'] ? :selenium_chrome : :selenium_chrome
-Capybara.javascript_driver = :selenium_chrome
+if ENV['CI']
+  Capybara.default_driver = :selenium_chrome_headless
+  Capybara.javascript_driver = :selenium_chrome_headless
+else
+  Capybara.default_driver = :selenium_chrome
+  Capybara.javascript_driver = :selenium_chrome
+end
