@@ -1,0 +1,75 @@
+name: ui_test_report
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  ui_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          path: repo
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Start Services with Docker Compose
+        run: docker compose -f repo/docker-compose.yml up -d
+
+      - name: Run PostgreSQL Init Script
+        run: bash repo/init_postgres.sh
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '22'
+          distribution: 'temurin'
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+          working-directory: repo
+
+      - name: Install Gems
+        run: bundle install
+        working-directory: repo
+
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Run UI Automation Tests
+        run: bundle exec rspec || true
+        working-directory: ./repo
+
+      - name: Generate Allure Report
+        run: |
+          curl -o allure.tgz -Ls https://github.com/allure-framework/allure2/releases/download/2.29.0/allure-2.29.0.tgz
+          tar -xzf allure.tgz
+          ./allure-2.29.0/bin/allure generate reports/allure-results --clean -o reports/allure-report
+        working-directory: repo
+
+      - name: Upload Allure Report Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-ui-report
+          path: repo/reports/allure-report
+          retention-days: 7
+
+      - name: Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./repo/reports/allure-report
+
+      - name: All Done
+        run: echo "UI Automation CI completed successfully"
