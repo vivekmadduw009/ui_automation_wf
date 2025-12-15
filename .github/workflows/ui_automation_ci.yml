@@ -70,6 +70,7 @@ jobs:
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./repo/reports/allure-report
+          enable_jekyll: 'false'
 
       - name: All Done
         run: echo "UI Automation completed successfully"
