@@ -1,0 +1,5 @@
+"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
+"spec/features","Login Scenarios","","0","5","0","0","0"
+"spec/features","Create Ticket","","0","2","0","0","0"
+"spec/features","FailedTest","","0","1","0","0","0"
+"spec/features","Database Validation","","0","1","0","0","0"
