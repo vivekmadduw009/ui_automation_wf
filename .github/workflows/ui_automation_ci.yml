@@ -72,4 +72,4 @@ jobs:
           publish_dir: ./repo/reports/allure-report
 
       - name: All Done
-        run: echo "UI Automation completed successfully"
+        run: echo "UI Automation Tests completed successfully"
