@@ -86,4 +86,29 @@ class TicketDesk_page< BasePage
     false
   end
 
+
+  def ticket_row_by_subject(subject)
+    find(
+      :xpath,
+      "//table//tr[.//a[contains(normalize-space(.), '#{subject}')]]",
+      wait: 10
+    )
+  end
+
+  def list_values_for(subject)
+    row = ticket_row_by_subject(subject)
+
+    {
+      subject:   row.find(:xpath, "./td[2]").text,
+      requester: row.find(:xpath, "./td[3]").text,
+      status:  row.find(:xpath, "./td[4]").text.downcase,
+      priority:    row.find(:xpath, "./td[5]").text.downcase,
+      source:    row.find(:xpath, "./td[6]").text.downcase,
+      assigned_to:  row.find(:xpath, "./td[7]").text,
+      created_at:  row.find(:xpath, "./td[8]").text,
+
+
+    }
+  end
+
 end
